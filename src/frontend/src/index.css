@@ -22,3 +22,20 @@ body {
 #root {
   min-height: 100vh;
 }
+
+.module-action-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.module-action-row > .MuiButton-root {
+  min-height: 40px;
+}
+
+@media (max-width: 600px) {
+  .module-action-row > .MuiButton-root {
+    flex: 1 1 160px;
+  }
+}

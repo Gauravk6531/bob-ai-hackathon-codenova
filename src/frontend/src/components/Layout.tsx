@@ -112,7 +112,7 @@ export default function Layout() {
           </Typography>
 
           {!isMobile && (
-            <Box sx={{ ml: 4, display: 'flex', gap: 0.5 }}>
+            <Box sx={{ ml: 4, display: 'flex', gap: 0.5, alignItems: 'center' }}>
               {NAV_ITEMS.map((item) => (
                 <Tooltip key={item.path} title={item.label}>
                   <Button
@@ -120,6 +120,7 @@ export default function Layout() {
                     startIcon={item.icon}
                     onClick={() => navigate(item.path)}
                     sx={{
+                      minHeight: 40,
                       opacity: isActive(item.path) ? 1 : 0.75,
                       fontWeight: isActive(item.path) ? 700 : 400,
                       borderBottom: isActive(item.path) ? '2px solid white' : '2px solid transparent',

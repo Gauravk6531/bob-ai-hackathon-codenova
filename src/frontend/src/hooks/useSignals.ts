@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { detectSignals } from '../services/apiClient'
+import { reportStorage } from '../services/reportStorage'
 import type { SignalResponse, SignalRequest } from '../types'
 
 interface UseSignalsResult {
@@ -11,7 +12,7 @@ interface UseSignalsResult {
 }
 
 export function useSignals(): UseSignalsResult {
-  const [data, setData] = useState<SignalResponse | null>(null)
+  const [data, setData] = useState<SignalResponse | null>(() => reportStorage.getSignal())
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -22,6 +23,7 @@ export function useSignals(): UseSignalsResult {
     try {
       const result = await detectSignals(request)
       setData(result)
+      reportStorage.setSignal(result)
     } catch (err: unknown) {
       const msg =
         err instanceof Error ? err.message : 'Failed to fetch signal data. Is the backend running?'
@@ -33,6 +35,7 @@ export function useSignals(): UseSignalsResult {
 
   const reset = () => {
     setData(null)
+    reportStorage.clearSignal()
     setError(null)
     setLoading(false)
   }

@@ -123,18 +123,19 @@ export default function SubmissionReadiness() {
           )}
         </Box>
 
-        <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
+        <Box className="module-action-row" sx={{ mt: 2 }}>
           <Button
             variant="contained"
             color="secondary"
             startIcon={loading ? <CircularProgress size={16} color="inherit" /> : <AssignmentTurnedInIcon />}
             disabled={!selectedFile || loading}
             onClick={handleSubmit}
+            sx={{ minWidth: 170 }}
           >
             {loading ? 'Analysing…' : 'Check Readiness'}
           </Button>
           {(selectedFile || data) && (
-            <Button variant="outlined" onClick={handleReset}>
+            <Button variant="outlined" onClick={handleReset} sx={{ minWidth: 82 }}>
               Reset
             </Button>
           )}

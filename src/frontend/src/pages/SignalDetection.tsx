@@ -88,7 +88,7 @@ export default function SignalDetection() {
               />
             </Grid>
             <Grid item xs={12} md={7}>
-              <Box sx={{ display: 'flex', gap: 1 }}>
+              <Box className="module-action-row">
                 <Button
                   type="submit"
                   variant="contained"
@@ -96,12 +96,12 @@ export default function SignalDetection() {
                     loading ? <CircularProgress size={16} color="inherit" /> : <SearchIcon />
                   }
                   disabled={loading || !drugName.trim()}
-                  fullWidth
+                  sx={{ flex: 1, minWidth: 0 }}
                 >
                   {loading ? 'Analysing…' : 'Analyse'}
                 </Button>
                 {data && (
-                  <Button variant="outlined" onClick={reset} size="small">
+                  <Button variant="outlined" onClick={reset} sx={{ minWidth: 82 }}>
                     Clear
                   </Button>
                 )}

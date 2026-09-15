@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { checkReadiness } from '../services/apiClient'
+import { reportStorage } from '../services/reportStorage'
 import type { ReadinessResponse } from '../types'
 
 interface UseReadinessResult {
@@ -11,7 +12,7 @@ interface UseReadinessResult {
 }
 
 export function useReadiness(): UseReadinessResult {
-  const [data, setData] = useState<ReadinessResponse | null>(null)
+  const [data, setData] = useState<ReadinessResponse | null>(() => reportStorage.getReadiness())
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -22,6 +23,7 @@ export function useReadiness(): UseReadinessResult {
     try {
       const result = await checkReadiness(file)
       setData(result)
+      reportStorage.setReadiness(result)
     } catch (err: unknown) {
       const msg =
         err instanceof Error ? err.message : 'Failed to check readiness. Is the backend running?'
@@ -33,6 +35,7 @@ export function useReadiness(): UseReadinessResult {
 
   const reset = () => {
     setData(null)
+    reportStorage.clearReadiness()
     setError(null)
     setLoading(false)
   }
