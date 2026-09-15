@@ -18,11 +18,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-from backend.api import signals, readiness, ai  # noqa: E402
+from backend.api import signals, readiness  # noqa: E402
 
 app.include_router(signals.router, prefix="/api")
 app.include_router(readiness.router, prefix="/api")
-app.include_router(ai.router, prefix="/api")
 
 
 @app.get("/health", tags=["Health"])

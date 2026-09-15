@@ -9,9 +9,9 @@ import {
   Alert,
   CircularProgress,
   Chip,
-  Divider,
   Tab,
   Tabs,
+  Tooltip,
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import BiotechIcon from '@mui/icons-material/Biotech'
@@ -20,15 +20,12 @@ import { useSignals } from '../hooks/useSignals'
 import SignalTable from '../components/SignalTable'
 import PRRChart from '../components/PRRChart'
 import TrendChart from '../components/TrendChart'
-import AIExplainer from '../components/AIExplainer'
 import type { Signal } from '../types'
 
 const EXAMPLE_DRUGS = ['aspirin', 'ibuprofen', 'metformin', 'warfarin', 'atorvastatin']
 
 export default function SignalDetection() {
   const [drugName, setDrugName] = useState('')
-  const [startYear, setStartYear] = useState('')
-  const [endYear, setEndYear] = useState('')
   const [selectedSignal, setSelectedSignal] = useState<Signal | null>(null)
   const [activeTab, setActiveTab] = useState(0)
   const { data, loading, error, fetch, reset } = useSignals()
@@ -39,18 +36,8 @@ export default function SignalDetection() {
     setSelectedSignal(null)
     await fetch({
       drug_name: drugName.trim(),
-      start_year: startYear ? parseInt(startYear) : undefined,
-      end_year: endYear ? parseInt(endYear) : undefined,
     })
   }
-
-  const aiContext = data
-    ? `Drug: ${data.drug_name}. Total FAERS reports: ${data.total_reports}. ` +
-      `Top signals: ${data.signals
-        .slice(0, 5)
-        .map((s) => `${s.adverse_event} (PRR=${s.prr}, n=${s.report_count}, level=${s.signal_level})`)
-        .join('; ')}.`
-    : ''
 
   return (
     <Box sx={{ maxWidth: 1200, mx: 'auto', px: { xs: 2, md: 4 }, py: 4 }}>
@@ -74,8 +61,11 @@ export default function SignalDetection() {
         icon={<WarningAmberIcon />}
         sx={{ mb: 3, borderRadius: 2 }}
       >
-        <strong>Important:</strong> Safety signals are statistical associations, NOT proof of causality.
-        All findings require clinical expert review and further investigation before regulatory or clinical decisions.
+        <strong>Important:</strong> Safety signals are statistical associations,{' '}
+        <strong>NOT proof of causality</strong>. A detected signal is a{' '}
+        <strong>Potential Safety Signal</strong> only — not a confirmed adverse reaction and
+        not proof that the drug caused the event. All findings require clinical expert review
+        and further investigation before regulatory or clinical decisions.
       </Alert>
 
       {/* Search Form */}
@@ -87,7 +77,7 @@ export default function SignalDetection() {
           <Grid container spacing={2} alignItems="flex-end">
             <Grid item xs={12} md={5}>
               <TextField
-                label="Drug Name"
+                label="Drug Name *"
                 value={drugName}
                 onChange={(e) => setDrugName(e.target.value)}
                 placeholder="e.g. aspirin, ibuprofen, warfarin"
@@ -97,36 +87,14 @@ export default function SignalDetection() {
                 helperText="Enter the INN or brand name of the drug"
               />
             </Grid>
-            <Grid item xs={6} md={2}>
-              <TextField
-                label="Start Year"
-                value={startYear}
-                onChange={(e) => setStartYear(e.target.value)}
-                placeholder="2020"
-                type="number"
-                inputProps={{ min: 2000, max: 2024 }}
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={6} md={2}>
-              <TextField
-                label="End Year"
-                value={endYear}
-                onChange={(e) => setEndYear(e.target.value)}
-                placeholder="2024"
-                type="number"
-                inputProps={{ min: 2000, max: 2024 }}
-                fullWidth
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={7}>
               <Box sx={{ display: 'flex', gap: 1 }}>
                 <Button
                   type="submit"
                   variant="contained"
-                  startIcon={loading ? <CircularProgress size={16} color="inherit" /> : <SearchIcon />}
+                  startIcon={
+                    loading ? <CircularProgress size={16} color="inherit" /> : <SearchIcon />
+                  }
                   disabled={loading || !drugName.trim()}
                   fullWidth
                 >
@@ -181,16 +149,38 @@ export default function SignalDetection() {
       {data && !loading && (
         <Box>
           {/* Summary stats */}
-          <Box sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap' }}>
+          <Box sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap', alignItems: 'center' }}>
             <Chip label={`Drug: ${data.drug_name}`} color="primary" />
             <Chip label={`${data.total_reports} total reports`} variant="outlined" />
-            <Chip label={`${data.signals.filter((s) => s.signal_level === 'signal').length} signals`} color="error" variant="outlined" />
-            <Chip label={`${data.signals.filter((s) => s.signal_level === 'weak_signal').length} weak signals`} color="warning" variant="outlined" />
+            <Chip
+              label={`${data.signals.filter((s) => s.signal_level === 'signal').length} Potential Safety Signals`}
+              color="error"
+              variant="outlined"
+            />
+            <Chip
+              label={`${data.signals.filter((s) => s.signal_level === 'weak_signal').length} Weak / Emerging Potential Safety Signals`}
+              color="warning"
+              variant="outlined"
+            />
+            <Tooltip
+              title={
+                'Downloaded processed FDA FAERS dataset; counts use unique report IDs'
+              }
+            >
+              <Chip
+                label="FDA FAERS dataset"
+                color="success"
+                variant="outlined"
+                size="small"
+              />
+            </Tooltip>
           </Box>
 
           {data.signals.length === 0 ? (
             <Alert severity="info" sx={{ borderRadius: 2 }}>
-              No adverse event signals found for <strong>{data.drug_name}</strong> in the available data.
+              No adverse event signals found for <strong>{data.drug_name}</strong> in the
+              selected year range. The downloaded FAERS dataset may contain no reports for
+              this drug in that period.
             </Alert>
           ) : (
             <Grid container spacing={3}>
@@ -207,7 +197,10 @@ export default function SignalDetection() {
                   </Tabs>
                   <Box sx={{ p: 2 }}>
                     {activeTab === 0 && (
-                      <SignalTable signals={data.signals} onSelectSignal={setSelectedSignal} />
+                      <SignalTable
+                        signals={data.signals}
+                        onSelectSignal={setSelectedSignal}
+                      />
                     )}
                     {activeTab === 1 && <PRRChart signals={data.signals} />}
                   </Box>
@@ -238,10 +231,6 @@ export default function SignalDetection() {
                 </Grid>
               )}
 
-              <Grid item xs={12}>
-                <Divider sx={{ my: 1 }} />
-                <AIExplainer mode="signals" context={aiContext} />
-              </Grid>
             </Grid>
           )}
         </Box>

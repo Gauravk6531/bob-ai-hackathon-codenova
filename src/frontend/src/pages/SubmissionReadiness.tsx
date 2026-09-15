@@ -16,7 +16,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { useReadiness } from '../hooks/useReadiness'
 import ReadinessGauge from '../components/ReadinessGauge'
 import GapReport from '../components/GapReport'
-import AIExplainer from '../components/AIExplainer'
 
 export default function SubmissionReadiness() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -51,18 +50,6 @@ export default function SubmissionReadiness() {
     reset()
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
-
-  const aiContext = data
-    ? `File: ${data.filename}. Overall CTD completeness: ${data.overall_completeness_pct}%. ` +
-      data.module_scores
-        .map((m) => `${m.module}: ${m.completeness_pct}% (${m.matched}/${m.total_required})`)
-        .join('; ') +
-      `. High-priority gaps: ${data.gaps
-        .filter((g) => g.required)
-        .slice(0, 5)
-        .map((g) => g.title)
-        .join(', ')}.`
-    : ''
 
   return (
     <Box sx={{ maxWidth: 1100, mx: 'auto', px: { xs: 2, md: 4 }, py: 4 }}>
@@ -209,10 +196,6 @@ export default function SubmissionReadiness() {
             <GapReport gaps={data.gaps} />
           </Paper>
 
-          <Divider sx={{ my: 3 }} />
-
-          {/* AI Explainer */}
-          <AIExplainer mode="readiness" context={aiContext} />
         </Box>
       )}
     </Box>

@@ -25,18 +25,13 @@ const FEATURES = [
   },
   {
     icon: <ScienceIcon sx={{ fontSize: 32, color: '#00695C' }} />,
-    title: 'openFDA Integration',
-    desc: 'Live data from the FDA Adverse Event Reporting System with CSV fallback.',
+    title: 'Processed FAERS Dataset',
+    desc: 'Downloaded FDA adverse-event reports with unique case/report counting.',
   },
   {
     icon: <VerifiedIcon sx={{ fontSize: 32, color: '#1565C0' }} />,
     title: 'ICH CTD Compliance Check',
     desc: 'Automated dossier gap analysis against ICH CTD Modules 1–5 requirements.',
-  },
-  {
-    icon: <SecurityIcon sx={{ fontSize: 32, color: '#00695C' }} />,
-    title: 'AI-Powered Explanations',
-    desc: 'IBM watsonx.ai (Granite) provides regulatory-grade plain-language insights.',
   },
 ]
 
@@ -71,7 +66,7 @@ export default function Dashboard() {
           </Typography>
           <Typography variant="body1" sx={{ opacity: 0.85, maxWidth: 600, mb: 3 }}>
             A pharmacovigilance platform for detecting adverse drug reaction signals from FAERS data
-            and assessing ICH CTD dossier completeness — powered by IBM watsonx.ai.
+            and assessing ICH CTD dossier completeness.
           </Typography>
           <Chip
             icon={<SecurityIcon sx={{ color: 'white !important', fontSize: 16 }} />}
@@ -135,11 +130,11 @@ export default function Dashboard() {
                 </Box>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                   Enter a drug name to analyse FAERS adverse event reports. Computes PRR to rank
-                  signals, visualises trends over time, and provides AI-generated plain-language explanations.
+                  signals and visualises trends over time.
                 </Typography>
                 <Divider sx={{ my: 1.5 }} />
                 <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                  {['openFDA API', 'PRR Algorithm', 'Signal Ranking', 'Trend Charts'].map((t) => (
+                  {['Processed FAERS', 'PRR Algorithm', 'Signal Ranking', 'Trend Charts'].map((t) => (
                     <Chip key={t} label={t} size="small" variant="outlined" color="primary" />
                   ))}
                 </Box>
@@ -225,7 +220,7 @@ export default function Dashboard() {
       {/* Footer note */}
       <Box sx={{ mt: 5, pt: 3, borderTop: '1px solid', borderColor: 'divider', textAlign: 'center' }}>
         <Typography variant="caption" color="text.secondary">
-          DrugSafety AI · Built with IBM watsonx.ai · Data source: openFDA FAERS · ICH CTD requirements are hardcoded, not AI-generated
+          DrugSafety AI · Data source: downloaded FAERS dataset · ICH CTD requirements are hardcoded
         </Typography>
       </Box>
     </Box>
