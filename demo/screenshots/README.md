@@ -1,15 +1,24 @@
 # Screenshots
 
-Place your application screenshots in this folder.
+These screenshots were captured from the running application at a consistent desktop viewport using realistic project data.
+
+## Project Screenshots
+
+| File | Description |
+|---|---|
+| [01-dashboard.png](01-dashboard.png) | Landing dashboard showing the integrated safety-signal and regulatory-readiness workflows. |
+| [02-signal-detection.png](02-signal-detection.png) | Populated FAERS signal-detection results for `ibuprofen`, including PRR-based classifications and trend analysis. |
+| [03-submission-readiness.png](03-submission-readiness.png) | CTD submission-readiness results from a realistic dossier, including module completeness scores and prioritized gaps. |
+| [04-reports.png](04-reports.png) | Combined regulatory report preview with executive summary, analysis results, and PDF/CSV/JSON export controls. |
 
 ## Naming Convention
 
 Name your screenshots sequentially so they appear in logical order:
 
-  01-landing-page.png       ← First thing a user sees
-  02-main-feature.png       ← Your primary feature in action
-  03-output-or-results.png  ← The result / value delivered
-  04-additional-feature.png ← Any other notable screen
+  01-dashboard.png              ← First thing a user sees
+  02-signal-detection.png       ← Primary safety-signal feature
+  03-submission-readiness.png  ← CTD readiness output and gap report
+  04-reports.png                ← Combined report and export workflow
 
 ## Requirements
 

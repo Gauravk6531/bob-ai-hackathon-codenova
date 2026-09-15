@@ -1,6 +1,6 @@
-# 🚀 [Your Project Title Here]
+# 🚀 Drug Safety Signal Detector & Regulatory Submission Readiness Checker
 
-> ⚠️ **Replace everything in `[ ]` brackets with your actual content before submission.**
+> An integrated platform for detecting potential drug safety signals and assessing pharmaceutical dossier readiness against verified CTD requirements.
 
 ---
 
@@ -8,36 +8,38 @@
 
 | Field | Value |
 |---|---|
-| **Team Name** | [Your Team Name] |
-| **Track** | [AI / DevOps / Sustainability / Open] |
-| **Team Lead** | [Name] — [email@ibm.com] |
-| **Members** | [Name 1], [Name 2], [Name 3] |
+| **Team Name** | CodeNova |
+| **Track** | AI |
+| **Team Lead** | Dhairya Mehta — d25dcs155@charusat.edu.in |
+| **Members** | Kolhe Gaurav, Rucha Gandhi, Mithil Surti |
 
 ---
 
 ## 🎯 Problem Statement
 
-> In 2–3 sentences: What problem does your project solve? Who experiences this problem?
+Pharmacovigilance teams handle large volumes of adverse-event reports, making it difficult to quickly identify drug-event associations that may require further investigation. At the same time, regulatory teams manually review large pharmaceutical dossiers to identify missing or unclear CTD sections before submission.
 
-[Describe the real-world problem your project addresses. Be specific about who the user is and what pain point they face.]
+These workflows are often handled separately, increasing review effort and making it difficult to get a unified view of safety signals and regulatory readiness.
 
 ---
 
 ## 💡 Solution
 
-> In 2–3 sentences: What did you build? How does it solve the problem above?
+We built an integrated platform that analyzes official FAERS/AEMS data to identify statistical drug-event safety signals using PRR and Chi-square analysis, while checking pharmaceutical dossiers against verified ICH CTD requirements.
 
-[Describe your solution clearly. Explain the core mechanism — what makes it work.]
+The platform combines deterministic statistical analysis, CTD document mapping, readiness assessment, gap identification, AI-assisted explanations, and report generation into one workflow.
 
 ---
 
 ## ✨ Key Features
 
-- **Feature 1:** [Brief description — e.g., "Real-time anomaly detection using watsonx.ai"]
-- **Feature 2:** [Brief description]
-- **Feature 3:** [Brief description]
-- **Feature 4:** [Optional]
-- **Feature 5:** [Optional]
+- **Safety Signal Detection:** Analyze FAERS/AEMS data to identify potential drug-event associations.
+- **Statistical Analysis:** Calculate PRR, Chi-square, drug/background reporting percentages, and 2x2 contingency tables.
+- **Signal Classification:** Classify results as Potential Safety Signal, Weak/Emerging Signal, or No Signal using transparent application-configured criteria.
+- **Trend & Cluster Analysis:** Analyze event patterns over time and identify meaningful patterns where sufficient data exists.
+- **CTD Submission Readiness:** Map uploaded dossier content against verified ICH CTD requirements across Modules 1-5.
+- **Gap Analysis:** Identify Present, Missing, Unrecognized, and Not Applicable requirements.
+- **Regulatory Reports:** Generate safety signal, submission readiness, and combined regulatory reports.
 
 ---
 
@@ -45,27 +47,25 @@
 
 | Category | Technologies |
 |---|---|
-| **Languages** | [e.g., Python, TypeScript] |
-| **Frameworks** | [e.g., FastAPI, React] |
-| **IBM Technologies** | [e.g., watsonx.ai, IBM Bob, IBM Cloud] |
-| **Databases** | [e.g., PostgreSQL, Redis] |
-| **Other** | [e.g., Docker, GitHub Actions] |
+| **Languages** | Python, TypeScript |
+| **Frameworks** | FastAPI, React, Vite |
+| **IBM Technologies** | IBM Bob |
+| **Databases** | None; local CSV/JSON data files |
+| **Other** | Pandas, NumPy, Axios, Recharts, Material UI, REST API, Git, GitHub |
 
 ---
 
 ## 📁 Repository Structure
 
-```
-├── src/                  # All source code
-├── docs/                 # Written documentation
-│   ├── problem-statement.md
-│   ├── solution-overview.md
-│   ├── architecture.md
-│   └── setup-guide.md
-├── demo/                 # Demo artifacts
-│   ├── screenshots/      # App screenshots
-│   └── demo-video-link.txt  # Link to demo video
-├── presentation/         # Slide deck
+```text
+├── src/
+│   ├── backend/          # FastAPI API, analysis services, models, and tests
+│   ├── data_pipeline/   # FDA data fetching, cleaning, normalization, and validation
+│   └── frontend/        # React + Vite web application
+├── data/                 # Raw and processed FAERS/AEMS datasets
+├── docs/                 # Problem, solution, architecture, dataset, and setup docs
+├── demo/                 # Demo video, live demo, and screenshots
+├── presentation/         # Presentation materials
 └── submission.yaml       # Structured submission metadata
 ```
 
@@ -73,22 +73,46 @@
 
 ## ⚡ How to Run
 
-> **Copy these exact steps from your [`docs/setup-guide.md`](docs/setup-guide.md)**
+The application runs as a FastAPI backend and a Vite frontend. Use two terminals from the repository root.
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/[your-repo].git
-cd [your-repo]
+git clone https://github.com/Gauravk6531/bob-ai-hackathon-codenova.git
+cd bob-ai-hackathon-codenova
 
-# 2. Install dependencies
-[your install command here]
+# 2. Create and activate a Python virtual environment
+python -m venv .venv
+# macOS/Linux: source .venv/bin/activate
+# Windows PowerShell: .venv\Scripts\Activate.ps1
 
-# 3. Configure environment
-cp .env.example .env
-# Edit .env with your values
+# 3. Install backend dependencies
+pip install -r src/backend/requirements.txt
 
-# 4. Run the project
-[your run command here]
+# 4. Install frontend dependencies
+cd src/frontend
+npm install
+```
+
+Start the backend in one terminal:
+
+```bash
+cd src
+uvicorn backend.main:app --reload
+```
+
+Start the frontend in a second terminal:
+
+```bash
+cd src/frontend
+npm run dev
+```
+
+Open `http://localhost:5173`. The backend health endpoint is available at `http://localhost:8000/health`.
+
+Run backend tests from the repository root with:
+
+```bash
+pytest src/backend/tests -v
 ```
 
 ---
@@ -100,7 +124,7 @@ cp .env.example .env
 | 📹 Demo Video | [See demo/demo-video-link.txt](demo/demo-video-link.txt) |
 | 🌐 Live Demo | [See demo/live-demo-url.txt](demo/live-demo-url.txt) |
 | 🖼️ Screenshots | [See demo/screenshots/](demo/screenshots/) |
-| 📊 Presentation | [See presentation/slides.pdf](presentation/) |
+| 📊 Presentation | [See presentation/](presentation/) |
 
 ---
 
@@ -108,14 +132,18 @@ cp .env.example .env
 
 > Be honest — judges appreciate transparency over overclaiming.
 
-- [Limitation 1: e.g., "Authentication is mocked — not production-ready"]
-- [Limitation 2: e.g., "Only tested on Chrome"]
-- [Limitation 3: e.g., "Feature X is scaffolded but not fully implemented"]
+- FAERS/AEMS data is based on spontaneous adverse-event reporting and may contain reporting bias, incomplete information, and duplicate reports.
+- PRR and Chi-square identify statistical associations but do not establish causality.
+- Small report counts can produce unstable statistical results and require expert review.
+- CTD completeness depends on the quality and structure of uploaded documents and the verified requirements dataset.
+- Module 1 requirements can vary by regulatory region.
+- Some documents or sections may require human review when they cannot be confidently mapped.
+- Submission readiness does not guarantee regulatory approval or acceptance.
 
 ---
 
 ## 🏅 What We're Most Proud Of
 
-[Tell the judges what part of your submission is strongest and worth paying close attention to.]
+The platform brings real-world pharmacovigilance signal detection and regulatory submission readiness into one decision-support workflow. It connects statistical safety-signal analysis with regulatory gap identification and provides a practical foundation for investigation and expert review.
 
 ---
