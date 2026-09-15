@@ -9,51 +9,67 @@
 # =============================================================================
 
 team:
-  name: ""                             # REQUIRED — e.g., "Orion Squad"
-  track: ""                            # REQUIRED — one of: AI | DevOps | Sustainability | Open
+  name: "CodeNova"                             # REQUIRED — e.g., "Orion Squad"
+  track: "AI"                                  # REQUIRED — one of: AI | DevOps | Sustainability | Open
   lead:
-    name: ""                           # REQUIRED — e.g., "Alice Chen"
-    email: ""                          # REQUIRED — e.g., "alice.chen@ibm.com"
+    name: "Dhairya Mehta"                      # REQUIRED — e.g., "Alice Chen"
+    email: "[d25dcs155@charusat.edu.in](mailto:d25dcs155@charusat.edu.in)"  # REQUIRED — e.g., "[alice.chen@ibm.com](mailto:alice.chen@ibm.com)"
   members:
-    - name: ""                         # REQUIRED — Team member 1
-      email: ""
-    - name: ""                         # Add more members by copying the two lines above
-      email: ""
-    - name: ""
-      email: ""
+    - name: "Kolhe Gaurav"                     # REQUIRED — Team member 1
+      email: "[d25aiml079@charusat.edu.in](mailto:d25aiml079@charusat.edu.in)"
+    - name: "Rucha Gandhi"                     # Add more members by copying the two lines above
+      email: "[24dcs025@charusat.edu.in](mailto:24dcs025@charusat.edu.in)"
+    - name: "Mithil Surti"
+      email: "[d25dcs161@charusat.edu.in](mailto:d25dcs161@charusat.edu.in)"
 
 submission:
-  title: ""                            # REQUIRED — Project display name, e.g., "SmartOps Dashboard"
+  title: "Drug Safety Signal Detector & Regulatory Submission Readiness Checker"  # REQUIRED — Project display name, e.g., "SmartOps Dashboard"
 
   problem_statement: >                 # REQUIRED — 1-3 sentences. What problem? Who has it?
-    Replace this text with a concise description of the real-world problem
-    your project addresses and who experiences it.
+    Pharmacovigilance and regulatory teams must analyze large volumes of
+    adverse event reports to identify potential drug safety signals and
+    manually verify whether regulatory submission packages contain the
+    required information. This process is time-consuming, difficult to
+    scale, and makes it challenging to efficiently prioritize potential
+    safety signals and identify regulatory submission gaps.
 
   solution_summary: >                  # REQUIRED — 1-3 sentences. What did you build?
-    Replace this text with a clear description of your solution
-    and how it addresses the problem above.
+    We are building an AI-powered decision-support platform that analyzes
+    FDA adverse event data to identify potential drug-event safety signals
+    using disproportionality analysis such as the Proportional Reporting
+    Ratio (PRR), while assessing regulatory submission readiness against
+    structured CTD and ICH requirements. IBM Bob supports intelligent
+    analysis, explanations, investigation workflows, and development
+    assistance throughout the platform.
 
   key_features:                        # REQUIRED — List 3 to 5 specific features you implemented
-    - ""                               # e.g., "Real-time pipeline anomaly detection using watsonx.ai"
-    - ""
-    - ""
-    - ""                               # optional 4th
-    - ""                               # optional 5th
+    - "Drug-event safety signal detection from FAERS/AEMS adverse event data"
+    - "PRR-based disproportionality analysis and potential signal ranking"
+    - "Interactive dashboard for exploring drug safety signals and analysis results"
+    - "Regulatory submission readiness assessment using CTD/ICH requirements"
+    - "IBM Bob-powered explanations and investigation assistance"
 
   tech_stack:
-    languages: []                      # REQUIRED — e.g., ["Python", "TypeScript"]
-    frameworks: []                     # e.g., ["FastAPI", "React"]
-    ibm_technologies: []               # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
-    databases: []                      # e.g., ["PostgreSQL", "Redis"]
-    other: []                          # e.g., ["Docker", "GitHub Actions", "Slack API"]
+    languages: ["Python", "TypeScript"]      # REQUIRED — e.g., ["Python", "TypeScript"]
+    frameworks: ["FastAPI", "React"]         # e.g., ["FastAPI", "React"]
+    ibm_technologies: ["IBM Bob"]             # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
+    databases: ["SQLite"]                     # e.g., ["PostgreSQL", "Redis"]
+    other: ["Pandas", "NumPy", "GitHub", "REST API"]  # e.g., ["Docker", "GitHub Actions", "Slack API"]
 
   what_we_are_most_proud_of: >         # Optional but recommended — guides judges to your best work
-    Replace with what aspect of the submission you consider strongest
-    and want judges to pay special attention to.
+    The combination of real-world pharmacovigilance signal detection and
+    regulatory submission readiness in a single decision-support platform.
+    The project connects statistical safety-signal analysis with regulatory
+    gap identification and uses IBM Bob as an intelligent layer for
+    explaining results and assisting investigation workflows.
 
   known_limitations: >                 # Optional but recommended — be honest about gaps
-    Replace with any known limitations, incomplete features,
-    or shortcuts taken due to time constraints.
+    The system is a decision-support prototype and does not establish
+    medical causality, determine that a drug is unsafe, or provide
+    regulatory approval or certification. FAERS/AEMS reports may contain
+    incomplete, duplicated, or biased information, and regulatory readiness
+    assessment depends on the completeness and accuracy of the provided
+    submission information.
 
 # =============================================================================
 # ARTIFACT LOCATIONS
