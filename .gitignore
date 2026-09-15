@@ -84,6 +84,9 @@ demo/*.mkv
 
 # ── Docker volumes / local data ───────────────────────────────────────────────
 data/
+!data/
+!data/processed/
+!data/processed/faers_clean.csv
 logs/
 *.log
 

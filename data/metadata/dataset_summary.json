@@ -1,0 +1,59 @@
+{
+  "api_source": "https://api.fda.gov/drug/event.json",
+  "query_strategy": {
+    "start_date": "2004-01-01",
+    "end_date": "2025-12-31",
+    "batch_size": 500,
+    "target_records": 5000
+  },
+  "raw_records_fetched": 5000,
+  "normalized_rows": 55662,
+  "final_rows": 44447,
+  "quality": {
+    "total_rows": 44447,
+    "unique_reports": 5000,
+    "unique_drugs": 3291,
+    "unique_reactions": 2125,
+    "unique_drug_event_pairs": 35737,
+    "missing_drug_pct": 0.0,
+    "missing_reaction_pct": 0.0,
+    "date_range": {
+      "min": "2008-06-25",
+      "max": "2023-07-26"
+    },
+    "duplicate_rows": 0
+  },
+  "metadata": {
+    "api_url": "https://api.fda.gov/drug/event.json",
+    "target_records": 5000,
+    "batch_size": 500,
+    "start_date": "2004-01-01",
+    "end_date": "2025-12-31",
+    "requested_batches": 10,
+    "records_fetched": 5000,
+    "records_saved_raw": 10,
+    "errors": [],
+    "query_strategy": "pagination_with_local_date_filter"
+  },
+  "dataset_columns": [
+    "report_id",
+    "report_date",
+    "receive_date",
+    "country",
+    "source",
+    "patient_age",
+    "patient_age_unit",
+    "patient_sex",
+    "patient_weight",
+    "drug_name_raw",
+    "drug_name_normalized",
+    "drug_role",
+    "drug_indication",
+    "drug_route",
+    "drug_dosage",
+    "reaction_raw",
+    "reaction_normalized",
+    "reaction_outcome",
+    "seriousness"
+  ]
+}
